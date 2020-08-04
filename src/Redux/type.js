@@ -1,5 +1,7 @@
 export const CREATE_POST = "POST/CREATE_POST"
 export const FETCH_POST = "POST/FETCH_POST"
+export const REQUEST_POST = "POST/REQUEST_POST"
+
 export const SHOW_LOUDER = "APP/SHOW_LOUDER"
 export const HIDE_LOUDER = "APP/HIDE_LOUDER"
 export const ERROR_DATA = "APP/ERROR_DATA"

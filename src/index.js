@@ -7,14 +7,22 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import { rootReducer } from './Redux/rootReducer'
 import thunk from 'redux-thunk'
+import createSagaMiddleware from 'redux-saga'
+import forbiddenWordsMidleware from './Redux/middleware'
+import { sagaWatcher } from './Redux/sagas'
 
 //const middlewares = [logger];
+
+const saga = createSagaMiddleware()
+
 const store = createStore(rootReducer, compose(
   applyMiddleware(
-    thunk
+    thunk, forbiddenWordsMidleware, saga
   ),
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-));
+))
+
+saga.run(sagaWatcher)
 
 ReactDOM.render(
 
