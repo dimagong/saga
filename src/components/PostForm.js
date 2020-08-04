@@ -3,6 +3,8 @@ import Form from 'react-bootstrap/Form'
 import { Button } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { createPost } from '../Redux/action'
+import { showAlert } from '../Redux/action'
+import AlertWiev from './Alert'
 
 class PostForm extends Component {
     constructor(props) {
@@ -17,7 +19,8 @@ class PostForm extends Component {
 
         const { title } = this.state;
 
-        if (!title.trim()) return;
+        if (!title.trim()) return this.props.showAlert('You need to enter the name of posts');
+
         const newPost = {
             title,
             id: Date.now().toString()
@@ -43,6 +46,9 @@ class PostForm extends Component {
         console.log('this.state', this.state.title)
         return (
             <Form onSubmit={this.submitHandler}>
+                {
+                    this.props.alert && <AlertWiev text={this.props.alert} />
+                }
                 <Form.Group >
                     <Form.Label>Title post</Form.Label>
                     <Form.Control
@@ -63,7 +69,16 @@ class PostForm extends Component {
 }
 
 const mapDispatchToProps = {
-    createPost
+    createPost,
+    showAlert
+
 }
 
-export default connect(null, mapDispatchToProps)(PostForm);
+const mapStateToProps = (state) => {
+    return {
+        alert: state.app.alert,
+    }
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);
